@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './TaskForm.css'; // Ensure the styles are imported
 
 const TaskForm = ({ onSaveTask, taskToEdit }) => {
   const [taskName, setTaskName] = useState('');
@@ -42,7 +43,8 @@ const TaskForm = ({ onSaveTask, taskToEdit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="task-form" onSubmit={handleSubmit}>
+      <h2>{taskToEdit ? 'Edit Task' : 'Add Task'}</h2>
       <input type="text" placeholder="Task Name" value={taskName} onChange={(e) => setTaskName(e.target.value)} required />
       <textarea placeholder="Task Definition" value={taskDefinition} onChange={(e) => setTaskDefinition(e.target.value)} required />
       <select value={taskPriority} onChange={(e) => setTaskPriority(e.target.value)} required>
