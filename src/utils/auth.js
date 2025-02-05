@@ -1,21 +1,73 @@
-export const registerUser = (username, password) => {
-    // Hash the password before storing (use a library like bcrypt in a real app)
-    localStorage.setItem('user', JSON.stringify({ username, password })); // Consider hashing
-    localStorage.setItem('isAuthenticated', true);
-  };
-  
-  export const loginUser = (username, password) => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    // Check hashed password (this is a placeholder, implement proper hashing)
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      localStorage.setItem('isAuthenticated', true);
-      return true;
-    } else {
-      return false;
-    }
-  };
-  
-  export const logoutUser = () => {
-    localStorage.removeItem('isAuthenticated');
-  };
+import { supabase } from './supabaseClient';
+
+export const registerUser = async (email, password) => {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const loginUser = async (email, password) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getCurrentSession = async () => {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) throw error;
+    return session;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error) throw error;
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const updateUserProfile = (userData) => {
+  const currentUser = getCurrentUser();
+  const updatedUser = { ...currentUser, ...userData };
+  localStorage.setItem('user', JSON.stringify(updatedUser));
+  return updatedUser;
+};
+
+export const isAuthenticated = async () => {
+  try {
+    const session = await getCurrentSession();
+    return !!session;
+  } catch (error) {
+    return false;
+  }
+};
   
