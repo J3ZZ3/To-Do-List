@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../utils/auth';
-import Alert from './Alert';
+import Alert from '../components/Alert';
 import './Auth.css';
 
 const Register = () => {

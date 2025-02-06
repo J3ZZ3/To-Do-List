@@ -1,0 +1,65 @@
+.progress-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.progress-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.progress-header h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+}
+
+.progress-header ion-icon {
+  font-size: 1.4rem;
+  color: #00FF66;
+}
+
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.progress-ring {
+  width: 150px;
+  height: 150px;
+}
+
+.circular-chart {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-path {
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.percentage {
+  fill: white;
+  font-size: 0.5em;
+  text-anchor: middle;
+  font-weight: bold;
+  transform: rotate(90deg);
+}
+
+.progress-label {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+} 

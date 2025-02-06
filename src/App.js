@@ -2,13 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
-import LandingPage from './components/LandingPage';
-import Login from './components/Login';
-import Register from './components/Register';
-import Home from './components/Home';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
 import TaskForm from './components/TaskForm';
-import Profile from './components/Profile';
+import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
+import TaskStats from './components/TaskStats';
 
 const App = () => {
   return (
@@ -37,6 +38,11 @@ const App = () => {
             <Route path="/profile" element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/stats" element={
+              <ProtectedRoute>
+                <TaskStats />
               </ProtectedRoute>
             } />
           </Routes>

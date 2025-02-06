@@ -1,7 +1,7 @@
 import React from 'react';
 import './TaskDetails.css';
 
-const TaskDetails = ({ task, onClose, onEditTask, onDeleteTask, onCompleteTask }) => {
+const TaskDetails = ({ task, onClose, onEditTask, onDeleteTask, onCompleteTask, viewOnly = false }) => {
   if (!task) return null;
 
   return (
@@ -43,31 +43,33 @@ const TaskDetails = ({ task, onClose, onEditTask, onDeleteTask, onCompleteTask }
           </div>
         </div>
 
-        <div className="task-actions">
-          <button 
-            className="action-button edit-button"
-            onClick={() => onEditTask(task)}
-          >
-            <ion-icon name="create-outline"></ion-icon>
-            Edit
-          </button>
-          
-          <button 
-            className="action-button complete-button"
-            onClick={() => onCompleteTask(task)}
-          >
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
-            {task.status === 'Completed' ? 'Mark Incomplete' : 'Next Status'}
-          </button>
-          
-          <button 
-            className="action-button delete-button"
-            onClick={() => onDeleteTask(task.id)}
-          >
-            <ion-icon name="trash-outline"></ion-icon>
-            Delete
-          </button>
-        </div>
+        {!viewOnly && (
+          <div className="task-actions">
+            <button 
+              className="action-button edit-button"
+              onClick={() => onEditTask(task)}
+            >
+              <ion-icon name="create-outline"></ion-icon>
+              Edit
+            </button>
+            
+            <button 
+              className="action-button complete-button"
+              onClick={() => onCompleteTask(task)}
+            >
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+              {task.status === 'Completed' ? 'Mark Incomplete' : 'Next Status'}
+            </button>
+            
+            <button 
+              className="action-button delete-button"
+              onClick={() => onDeleteTask(task.id)}
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

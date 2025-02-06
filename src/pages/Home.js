@@ -2,11 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient';
 import { useAuth } from '../context/AuthContext';
-import TaskList from './TaskList';
+import TaskList from '../components/TaskList';
+import Deadline from '../components/Deadline';
+import SearchBar from '../components/SearchBar';
 import './Home.css';
+import TaskProgress from '../components/TaskProgress';
 
 const Home = () => {
   const [tasks, setTasks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -99,35 +103,53 @@ const Home = () => {
     }
   };
 
+  // Filter tasks based on search query
+  const filteredTasks = tasks.filter(task =>
+    task.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="home-container">
-
-      <div className="button-container">
-        <button className="add-task-button" onClick={() => navigate('/add-task')}>
-          Add New Task
-        </button>
-        <button className="add-task-button" onClick={handleClearAllTasks}>
-          Clear All Tasks
-        </button>
-      </div>
-      {isLoading ? (
-        <div className="loading">Loading tasks...</div>
-      ) : tasks.length === 0 ? (
-        <div className="empty-state">
-          <div className="empty-state-message">
-            <span>👋 Welcome!</span>
-            <span>Start by adding your first task</span>
-            <span className="arrow-animation">↑</span>
-          </div>
+      <div className="home-content">
+        <div className="home-sidebar">
+          <Deadline tasks={tasks} />
+          <TaskProgress tasks={tasks} />
         </div>
-      ) : (
-        <TaskList 
-          tasks={tasks} 
-          onEditTask={handleEditTask} 
-          onDeleteTask={handleDeleteTask} 
-          onCompleteTask={handleCompleteTask} 
-        />
-      )}
+        
+        <div className="home-main">
+          {isLoading ? (
+            <div className="loading">Loading tasks...</div>
+          ) : tasks.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-state-message">
+                <span>👋 Welcome!</span>
+                <span>Start by adding your first task</span>
+                <button 
+                  className="add-task-button"
+                  onClick={() => navigate('/add-task')}
+                >
+                  <ion-icon name="add-outline"></ion-icon>
+                  Add Task
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <SearchBar 
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+              />
+              <TaskList 
+                tasks={filteredTasks} 
+                onEditTask={handleEditTask} 
+                onDeleteTask={handleDeleteTask} 
+                onCompleteTask={handleCompleteTask}
+                onClearAllTasks={handleClearAllTasks}
+              />
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

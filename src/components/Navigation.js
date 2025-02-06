@@ -35,6 +35,14 @@ const Navigation = () => {
           </button>
           
           <button 
+            onClick={() => navigate('/stats')} 
+            className={`nav-button ${location.pathname === '/stats' ? 'active' : ''}`}
+          >
+            <ion-icon name="stats-chart-outline"></ion-icon>
+            <span>Stats</span>
+          </button>
+          
+          <button 
             onClick={() => navigate('/profile')} 
             className={`nav-button ${location.pathname === '/profile' ? 'active' : ''}`}
           >

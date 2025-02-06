@@ -89,16 +89,16 @@
 }
 
 .action-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .edit-button {

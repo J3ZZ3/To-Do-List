@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../utils/auth';
 import { useAlert } from '../hooks/useAlert';
-import Spinner from './Spinner';
+import Spinner from '../components/Spinner';
 import './Auth.css';
 
 const Login = () => {

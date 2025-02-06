@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TaskDetails from './TaskDetails';
 import './TaskList.css'; // Ensure the styles are imported
 
-const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
+const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask, onClearAllTasks }) => {
+  const navigate = useNavigate();
   const [selectedTask, setSelectedTask] = useState(null);
   const [filters, setFilters] = useState({
     priority: 'all',
@@ -28,6 +30,12 @@ const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
     }
   };
 
+  const handleClearAllTasks = () => {
+    if (window.confirm('Are you sure you want to delete all tasks? This action cannot be undone.')) {
+      onClearAllTasks();
+    }
+  };
+
   const filteredTasks = tasks.filter(task => {
     const matchesPriority = filters.priority === 'all' || task.priority === filters.priority;
     const matchesStatus = filters.status === 'all' || 
@@ -39,50 +47,82 @@ const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
 
   return (
     <div className="task-list-container">
-      <div className="task-filters">
-        <select 
-          value={filters.priority} 
-          onChange={(e) => setFilters({...filters, priority: e.target.value})}
-        >
-          <option value="all">All Priorities</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
+      <div className="task-header-actions">
+        <div className="task-management-buttons">
+          <button 
+            className="add-task-button" 
+            onClick={() => navigate('/add-task')}
+          >
+            <ion-icon name="add-outline"></ion-icon>
+            Add New Task
+          </button>
+          <button 
+            className="clear-tasks-button" 
+            onClick={handleClearAllTasks}
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+            Clear All Tasks
+          </button>
+        </div>
+        
+        <div className="task-filters">
+          <div className="filter-group">
+            <select 
+              value={filters.priority} 
+              onChange={(e) => setFilters({...filters, priority: e.target.value})}
+            >
+              <option value="all">All Priorities</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
 
-        <select 
-          value={filters.status} 
-          onChange={(e) => setFilters({...filters, status: e.target.value})}
-        >
-          <option value="all">All Status</option>
-          <option value="completed">Completed</option>
-          <option value="incomplete">Incomplete</option>
-        </select>
+          <div className="filter-group">
+            <select 
+              value={filters.status} 
+              onChange={(e) => setFilters({...filters, status: e.target.value})}
+            >
+              <option value="all">All Status</option>
+              <option value="completed">Completed</option>
+              <option value="incomplete">Incomplete</option>
+            </select>
+          </div>
 
-        <input 
-          type="date" 
-          value={filters.dueDate} 
-          onChange={(e) => setFilters({...filters, dueDate: e.target.value})}
-        />
+          <div className="filter-group">
+            <input 
+              type="date" 
+              value={filters.dueDate} 
+              onChange={(e) => setFilters({...filters, dueDate: e.target.value})}
+            />
+          </div>
+        </div>
       </div>
 
       <ul className="task-list">
         {filteredTasks.map((task) => (
           <li 
             key={task.id} 
-            className="task-item"
+            className={`task-item ${task.status === 'Completed' ? 'completed' : ''}`}
             onClick={() => setSelectedTask(task)}
           >
-            <div className="task-details">
-              <h3>{task.name}</h3>
-              <p><strong>Due Date:</strong> {task.due_date}</p>
-              <div className="task-badges">
-                <span className={`task-status ${getStatusClass(task.status)}`}>
-                  {task.status}
-                </span>
-                <span className={`task-priority ${getPriorityClass(task.priority)}`}>
-                  {task.priority}
-                </span>
+            <div className="task-content">
+              <div className="task-header">
+                <h3>{task.name}</h3>
+                <div className="task-badges">
+                  <span className={`task-status ${getStatusClass(task.status)}`}>
+                    {task.status}
+                  </span>
+                  <span className={`task-priority ${getPriorityClass(task.priority)}`}>
+                    {task.priority}
+                  </span>
+                </div>
+              </div>
+              <div className="task-info">
+                <p><strong>Due:</strong> {task.due_date}</p>
+                {task.description && (
+                  <p className="task-description">{task.description}</p>
+                )}
               </div>
             </div>
           </li>
@@ -97,7 +137,10 @@ const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
             onEditTask(task);
             setSelectedTask(null);
           }}
-          onDeleteTask={onDeleteTask}
+          onDeleteTask={(id) => {
+            onDeleteTask(id);
+            setSelectedTask(null);
+          }}
           onCompleteTask={(id) => {
             onCompleteTask(id);
             setSelectedTask(null);

@@ -1,14 +1,16 @@
 .task-list-container {
-    margin-top: 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .task-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .task-item {
@@ -18,6 +20,8 @@
     cursor: pointer;
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .task-item:hover {
@@ -89,7 +93,8 @@
 }
 
 .task-filters {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     margin-bottom: 24px;
     padding: 16px;
@@ -97,9 +102,13 @@
     border-radius: 8px;
 }
 
-.task-filters select,
-.task-filters input {
-    flex: 1;
+.filter-group {
+    width: 90%;
+}
+
+.filter-group select,
+.filter-group input {
+    width: 100%;
     padding: 10px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -164,18 +173,47 @@
     border-left-color: rgba(72, 187, 120, 0.2);
 }
 
-@media (max-width: 640px) {
+/* Responsive Breakpoints */
+@media screen and (min-width: 1920px) {
+    .task-list {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .task-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media screen and (max-width: 1024px) {
     .task-filters {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .task-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .task-filters {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .task-item {
+        padding: 16px;
+    }
+    
+    .task-header {
         flex-direction: column;
     }
     
-    .task-filters select,
-    .task-filters input {
+    .task-badges {
         width: 100%;
-    }
-    
-    .task-item {
-        padding: 15px;
+        justify-content: flex-start;
     }
 }
 
@@ -238,5 +276,111 @@
     background: rgba(50, 173, 230, 0.1);
     border: 1px solid rgba(50, 173, 230, 0.2);
     box-shadow: 0 0 15px rgba(50, 173, 230, 0.3);
+}
+
+.task-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.task-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Update the task header actions and buttons */
+.task-header-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.task-management-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.add-task-button,
+.clear-tasks-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    height: 38px; /* Match filter height */
+}
+
+.add-task-button {
+    background: linear-gradient(135deg, #00b09b, #96c93d);
+}
+
+.clear-tasks-button {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+.add-task-button:hover,
+.clear-tasks-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.add-task-button ion-icon,
+.clear-tasks-button ion-icon {
+    font-size: 1.1rem;
+}
+
+/* Update media queries */
+@media screen and (max-width: 768px) {
+    .task-management-buttons {
+        grid-template-columns: 1fr 1fr; /* Force two columns on mobile */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .task-management-buttons {
+        grid-template-columns: 1fr; /* Stack on very small screens */
+    }
+    
+    .task-header-actions {
+        padding: 12px;
+        gap: 12px;
+    }
 }
   
