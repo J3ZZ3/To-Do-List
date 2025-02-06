@@ -8,6 +8,12 @@ const Navigation = () => {
   const location = useLocation();
   const { signOut } = useAuth();
 
+  // Hide navigation on these paths
+  const hiddenPaths = ['/', '/login', '/register'];
+  if (hiddenPaths.includes(location.pathname)) {
+    return null;
+  }
+
   const handleLogout = async () => {
     try {
       await signOut();
