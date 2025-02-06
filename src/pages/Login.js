@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../utils/auth';
+import { useAuth } from '../context/AuthContext';
 import { useAlert } from '../hooks/useAlert';
 import Spinner from '../components/Spinner';
 import './Auth.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const { showAlert, AlertComponent } = useAlert();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +18,7 @@ const Login = () => {
     setLoading(true);
     
     try {
-      await loginUser(email, password);
+      await signIn(email, password);
       showAlert({
         type: 'success',
         title: 'Success!',

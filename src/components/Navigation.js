@@ -14,6 +14,7 @@ const Navigation = () => {
       navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error.message);
+      // Optionally show an error message to the user
     }
   };
 

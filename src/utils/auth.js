@@ -5,10 +5,22 @@ export const registerUser = async (email, password) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/login`,
+      },
     });
+
     if (error) throw error;
-    return data;
+
+    // Sign out immediately after registration to prevent auto-login
+    await supabase.auth.signOut();
+    
+    return {
+      user: data.user,
+      message: "Registration successful! Please check your email to verify your account before logging in."
+    };
   } catch (error) {
+    console.error('Error in registerUser:', error.message);
     throw error;
   }
 };

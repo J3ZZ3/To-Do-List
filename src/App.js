@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
@@ -10,6 +11,23 @@ import TaskForm from './components/TaskForm';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 import TaskStats from './components/TaskStats';
+import Spinner from './components/Spinner';
+
+// Wrapper component to handle public routes
+const PublicRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return <Spinner />;
+  }
+  
+  // Redirect authenticated users to home page
+  if (user) {
+    return <Navigate to="/home" replace />;
+  }
+  
+  return children;
+};
 
 const App = () => {
   return (
@@ -17,9 +35,24 @@ const App = () => {
       <Router>
         <Layout>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/* Public routes */}
+            <Route path="/" element={
+              <PublicRoute>
+                <LandingPage />
+              </PublicRoute>
+            } />
+            <Route path="/login" element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            } />
+            <Route path="/register" element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            } />
+            
+            {/* Protected routes */}
             <Route path="/home" element={
               <ProtectedRoute>
                 <Home />
@@ -43,6 +76,13 @@ const App = () => {
             <Route path="/stats" element={
               <ProtectedRoute>
                 <TaskStats />
+              </ProtectedRoute>
+            } />
+            
+            {/* Catch all route - redirect to home or login */}
+            <Route path="*" element={
+              <ProtectedRoute>
+                <Navigate to="/home" replace />
               </ProtectedRoute>
             } />
           </Routes>

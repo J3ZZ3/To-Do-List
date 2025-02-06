@@ -4,23 +4,24 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
   animation: fadeIn 0.3s ease-out;
 }
 
 .custom-alert {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(34, 29, 29, 0.95);
   padding: 25px;
-  border-radius: 10px;
+  border-radius: 12px;
   text-align: center;
   max-width: 400px;
   width: 90%;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   animation: slideIn 0.3s ease-out;
 }
 
@@ -32,23 +33,36 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  font-size: 30px;
+  font-size: 24px;
   color: white;
+  border: 2px solid transparent;
 }
 
-.custom-alert-icon.success { background: #28a745; }
-.custom-alert-icon.error { background: #dc3545; }
-.custom-alert-icon.warning { background: #ffc107; }
-.custom-alert-icon.info { background: #17a2b8; }
+.custom-alert-icon.success { 
+  background: rgba(40, 167, 69, 0.2);
+  border-color: #28a745;
+}
+.custom-alert-icon.error { 
+  background: rgba(220, 53, 69, 0.2);
+  border-color: #dc3545;
+}
+.custom-alert-icon.warning { 
+  background: rgba(255, 193, 7, 0.2);
+  border-color: #ffc107;
+}
+.custom-alert-icon.info { 
+  background: rgba(23, 162, 184, 0.2);
+  border-color: #17a2b8;
+}
 
 .custom-alert-title {
   margin: 0 0 10px;
-  color: #333;
+  color: #ffffff;
   font-size: 1.5rem;
 }
 
 .custom-alert-message {
-  color: #666;
+  color: rgba(255, 255, 255, 0.8);
   margin: 0 0 20px;
   line-height: 1.5;
 }
@@ -62,10 +76,12 @@
 .custom-alert-button {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .custom-alert-button.confirm {
@@ -74,21 +90,23 @@
 
 .custom-alert-button.confirm.success { background: #28a745; }
 .custom-alert-button.confirm.error { background: #dc3545; }
-.custom-alert-button.confirm.warning { background: #ffc107; }
+.custom-alert-button.confirm.warning { background: #ffc107; color: #000; }
 .custom-alert-button.confirm.info { background: #17a2b8; }
 
 .custom-alert-button.confirm:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  filter: brightness(110%);
 }
 
 .custom-alert-button.cancel {
-  background: #f8f9fa;
-  color: #333;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .custom-alert-button.cancel:hover {
-  background: #e2e6ea;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
 @keyframes fadeIn {

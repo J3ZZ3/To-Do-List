@@ -1,53 +1,49 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../utils/auth';
-import Alert from '../components/Alert';
+import { useAlert } from '../hooks/useAlert';
+import Spinner from '../components/Spinner';
 import './Auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { showAlert, AlertComponent } = useAlert();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [alert, setAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (password !== confirmPassword) {
-      setAlert({
-        type: 'error',
-        message: 'Passwords do not match'
-      });
-      return;
-    }
+    setLoading(true);
 
     try {
-      await registerUser(email, password);
-      setAlert({
+      const { message } = await registerUser(email, password);
+      showAlert({
         type: 'success',
-        message: 'Registration successful! Please check your email for verification.'
+        title: 'Registration Successful',
+        message: message,
+        showConfirmButton: true,
+        confirmText: 'Go to Login',
+        onConfirm: () => navigate('/login')
       });
-      setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
-      setAlert({
+      showAlert({
         type: 'error',
-        message: error.message || 'Failed to register'
+        title: 'Registration Failed',
+        message: error.message,
+        showConfirmButton: true
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
-      {alert && (
-        <Alert 
-          type={alert.type} 
-          message={alert.message} 
-          onClose={() => setAlert(null)} 
-        />
-      )}
+      {loading && <Spinner text="Creating your account..." />}
+      {AlertComponent}
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h2>Register</h2>
+        <h2>Create Account</h2>
         <input
           type="email"
           placeholder="Email"
@@ -61,13 +57,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        />
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
+          minLength="6"
         />
         <button type="submit">Register</button>
         <p>
