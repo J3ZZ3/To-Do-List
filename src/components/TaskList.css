@@ -1,101 +1,242 @@
 .task-list-container {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    background-color: #ffffff00;
+    margin-top: 20px;
 }
 
 .task-list {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-}
-
-.task-list li {
-    padding: 15px;
-    margin: 10px 0;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    margin: 0;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.task-list li:hover {
-    transform: scale(1.02);
+.task-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.task-list li.completed {
-    text-decoration: line-through;
-    background: #d4edda;
-    color: #155724;
+.task-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.task-details {
-    flex: 1;
-    margin-right: 20px;
+.task-item h3 {
+    color: #fff;
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+}
+
+.task-item p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 5px 0;
+    font-size: 0.9rem;
 }
 
 .task-actions {
     display: flex;
-    flex-direction: column;
+    gap: 12px;
+    margin-left: 15px;
 }
 
-.task-list button {
-    margin-top: 5px;
-    padding: 8px 12px;
-    background: #007bff;
-    color: white;
+.icon-button {
+    background: none;
     border: none;
-    border-radius: 4px;
+    padding: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
-.task-list button:hover {
-    background: #0056b3;
+.icon-button ion-icon {
+    font-size: 1.2rem;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .task-list li {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .task-actions {
-        align-self: stretch;
-    }
-
-    .task-list button {
-        width: 100%;
-    }
+.edit-button {
+    color: #2196F3;
 }
 
-.task-priority-high {
-    border-left: 4px solid #dc3545;
+.edit-button:hover {
+    background-color: rgba(33, 150, 243, 0.1);
+    transform: translateY(-2px);
 }
 
-.task-priority-medium {
-    border-left: 4px solid #ffc107;
+.delete-button {
+    color: #dc3545;
 }
 
-.task-priority-low {
-    border-left: 4px solid #28a745;
+.delete-button:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    transform: translateY(-2px);
+}
+
+.complete-button {
+    color: #28a745;
+}
+
+.complete-button:hover {
+    background-color: rgba(40, 167, 69, 0.1);
+    transform: translateY(-2px);
 }
 
 .task-filters {
-    margin-bottom: 20px;
     display: flex;
-    gap: 10px;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
 }
 
 .task-filters select,
 .task-filters input {
-    padding: 8px;
-    border: 1px solid #ddd;
+    flex: 1;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.task-filters select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.task-filters select option {
+    background: #2d3748;
+    color: #fff;
+}
+
+.task-filters select:focus,
+.task-filters input:focus {
+    outline: none;
+    border-color: #007bff;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.task-priority-high {
+    border-left: 4px solid #f56565;
+}
+
+.task-priority-medium {
+    border-left: 4px solid #ed8936;
+}
+
+.task-priority-low {
+    border-left: 4px solid #48bb78;
+}
+
+.task-item.completed {
+    background: rgba(72, 187, 120, 0.1);
+    border-color: rgba(72, 187, 120, 0.2);
+}
+
+.task-item.completed h3 {
+    color: #2e7d32;
+    text-decoration: line-through;
+}
+
+.task-item.completed p {
+    color: #388e3c;
+}
+
+.task-item.completed .task-priority-high,
+.task-item.completed .task-priority-medium,
+.task-item.completed .task-priority-low {
+    border-left-color: rgba(72, 187, 120, 0.2);
+}
+
+@media (max-width: 640px) {
+    .task-filters {
+        flex-direction: column;
+    }
+    
+    .task-filters select,
+    .task-filters input {
+        width: 100%;
+    }
+    
+    .task-item {
+        padding: 15px;
+    }
+}
+
+/* Status Colors */
+.task-status {
+    padding: 4px 8px;
     border-radius: 4px;
+    font-weight: 500;
+    display: inline-block;
+    text-shadow: 0 0 10px currentColor;
+}
+
+.status-pending {
+    color: #FF9500;
+    background: rgba(255, 149, 0, 0.1);
+    border: 1px solid rgba(255, 149, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 149, 0, 0.3);
+}
+
+.status-in-progress {
+    color: #00E5FF;
+    background: rgba(0, 229, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+}
+
+.status-completed {
+    color: #00FF66;
+    background: rgba(0, 255, 102, 0.1);
+    border: 1px solid rgba(0, 255, 102, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+}
+
+/* Priority Colors */
+.task-priority {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 8px;
+    text-shadow: 0 0 10px currentColor;
+}
+
+.priority-high {
+    color: #FF3B30;
+    background: rgba(255, 59, 48, 0.1);
+    border: 1px solid rgba(255, 59, 48, 0.2);
+    box-shadow: 0 0 15px rgba(255, 59, 48, 0.3);
+}
+
+.priority-medium {
+    color: #FFD60A;
+    background: rgba(255, 214, 10, 0.1);
+    border: 1px solid rgba(255, 214, 10, 0.2);
+    box-shadow: 0 0 15px rgba(255, 214, 10, 0.3);
+}
+
+.priority-low {
+    color: #32ADE6;
+    background: rgba(50, 173, 230, 0.1);
+    border: 1px solid rgba(50, 173, 230, 0.2);
+    box-shadow: 0 0 15px rgba(50, 173, 230, 0.3);
 }
   

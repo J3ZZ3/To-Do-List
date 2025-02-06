@@ -1,11 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Layout from './components/Layout';
 import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import Register from './components/Register';
-import Home from './pages/Home';
+import Home from './components/Home';
+import TaskForm from './components/TaskForm';
+import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
@@ -20,6 +22,21 @@ const App = () => {
             <Route path="/home" element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            } />
+            <Route path="/add-task" element={
+              <ProtectedRoute>
+                <TaskForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/edit-task" element={
+              <ProtectedRoute>
+                <TaskForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
           </Routes>

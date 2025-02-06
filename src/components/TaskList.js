@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
+import TaskDetails from './TaskDetails';
 import './TaskList.css'; // Ensure the styles are imported
 
 const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
+  const [selectedTask, setSelectedTask] = useState(null);
   const [filters, setFilters] = useState({
     priority: 'all',
     status: 'all',
     dueDate: ''
   });
 
-  const getPriorityColor = (priority) => {
+  const getStatusClass = (status) => {
+    switch (status.toLowerCase()) {
+      case 'pending': return 'status-pending';
+      case 'in progress': return 'status-in-progress';
+      case 'completed': return 'status-completed';
+      default: return '';
+    }
+  };
+
+  const getPriorityClass = (priority) => {
     switch (priority.toLowerCase()) {
-      case 'high': return 'task-priority-high';
-      case 'medium': return 'task-priority-medium';
-      case 'low': return 'task-priority-low';
+      case 'high': return 'priority-high';
+      case 'medium': return 'priority-medium';
+      case 'low': return 'priority-low';
       default: return '';
     }
   };
@@ -21,7 +32,7 @@ const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
     const matchesPriority = filters.priority === 'all' || task.priority === filters.priority;
     const matchesStatus = filters.status === 'all' || 
       (filters.status === 'completed' ? task.status === 'Completed' : task.status !== 'Completed');
-    const matchesDueDate = !filters.dueDate || task.dueDate === filters.dueDate;
+    const matchesDueDate = !filters.dueDate || task.due_date === filters.dueDate;
 
     return matchesPriority && matchesStatus && matchesDueDate;
   });
@@ -59,23 +70,40 @@ const TaskList = ({ tasks, onEditTask, onDeleteTask, onCompleteTask }) => {
         {filteredTasks.map((task) => (
           <li 
             key={task.id} 
-            className={`task-item ${task.status === 'Completed' ? 'completed' : ''} ${getPriorityColor(task.priority)}`}
+            className="task-item"
+            onClick={() => setSelectedTask(task)}
           >
             <div className="task-details">
               <h3>{task.name}</h3>
-              <p><strong>Definition:</strong> {task.definition}</p>
-              <p><strong>Priority:</strong> {task.priority}</p>
-              <p><strong>Status:</strong> {task.status}</p>
-              <p><strong>Due Date:</strong> {task.dueDate}</p>
-            </div>
-            <div className="task-actions">
-              <button onClick={() => onEditTask(task)}>Edit</button>
-              <button onClick={() => onDeleteTask(task.id)}>Delete</button>
-              <button onClick={() => onCompleteTask(task.id)}>Complete</button>
+              <p><strong>Due Date:</strong> {task.due_date}</p>
+              <div className="task-badges">
+                <span className={`task-status ${getStatusClass(task.status)}`}>
+                  {task.status}
+                </span>
+                <span className={`task-priority ${getPriorityClass(task.priority)}`}>
+                  {task.priority}
+                </span>
+              </div>
             </div>
           </li>
         ))}
       </ul>
+
+      {selectedTask && (
+        <TaskDetails
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onEditTask={(task) => {
+            onEditTask(task);
+            setSelectedTask(null);
+          }}
+          onDeleteTask={onDeleteTask}
+          onCompleteTask={(id) => {
+            onCompleteTask(id);
+            setSelectedTask(null);
+          }}
+        />
+      )}
     </div>
   );
 };
