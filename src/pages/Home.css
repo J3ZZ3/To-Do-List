@@ -21,7 +21,8 @@
     flex-shrink: 0;
     height: fit-content;
     position: sticky;
-    top: 90px;
+    top: 350px;
+    margin-left: -100px;
   }
   
   .home-container header {

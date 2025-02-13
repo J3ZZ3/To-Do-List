@@ -39,7 +39,6 @@ TaskMaster is a modern task management web application built with React and Supa
 
 - **Backend**
   - Supabase for database and authentication
-  - Real-time subscriptions
   - File storage for avatars
 
 ## Getting Started
@@ -56,7 +55,7 @@ TaskMaster is a modern task management web application built with React and Supa
 
    ```bash
    git clone https://github.com/J3ZZ3/To-Do-List.git
-   cd TO-DO-LIST
+   cd To-Do-List
    ```
 
 2. Install the dependencies:
