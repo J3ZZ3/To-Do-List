@@ -132,11 +132,45 @@
 
 @media (max-width: 640px) {
     .task-form-container {
-        margin: 20px;
+        margin: 20px auto;
         padding: 20px;
+        max-width: 90%;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .form-group label {
+        text-align: center;
+        width: 100%;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 80%;
+        margin: 0 auto;
     }
 
     .form-actions {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .submit-button,
+    .cancel-button {
+        width: 80%;
+        margin: 5px 0;
+    }
+
+    .form-header {
+        text-align: center;
+        justify-content: center;
     }
 } 

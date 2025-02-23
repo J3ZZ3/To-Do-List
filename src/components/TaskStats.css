@@ -200,4 +200,11 @@
   .stats-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 640px) {
+  .stats-container {
+    padding: 16px; /* Reduced padding */
+    max-width: 90%; /* Adjusted for smaller mobile size */
+  }
 } 

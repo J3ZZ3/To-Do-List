@@ -128,13 +128,8 @@
   }
   
   .home-main {
-    margin-left: 340px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    min-height: calc(100vh - 140px);
-    overflow-x: auto;
+    flex: 1;
+    margin-left: 340px; /* Width of sidebar (300px) + gap (40px) */
   }
   
   /* Large Desktop Screens (1920x1080 and larger) */
@@ -317,6 +312,59 @@
     .home-main {
       order: 1;
       min-height: auto;
+    }
+  }
+  
+  /* Update media queries for better mobile responsiveness */
+  @media screen and (max-width: 1200px) {
+    .home-content {
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .home-main {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    .home-sidebar {
+      position: static;
+      width: 100%;
+      top: auto;
+      left: auto;
+    }
+
+    /* Match task list width with deadline container */
+    .task-list-container {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .task-list {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .home-container {
+      padding: 12px;
+    }
+
+    .home-content {
+      padding: 12px 8px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .home-container {
+      padding: 10px;
+      max-width: 90%;
+    }
+    .home-main {
+      margin-left: 0; /* Remove left margin on mobile */
+      width: 100%; /* Ensure it takes full width */
+      padding: 0; /* Remove padding for better alignment */
     }
   }
   

@@ -8,6 +8,22 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
+@media (max-width: 640px) {
+  .progress-container {
+    padding: 16px; /* Reduced padding */
+    max-width: 90%; /* Adjusted for smaller mobile size */
+    margin: 0 auto; /* Center the container */
+  }
+
+  .progress-header {
+    text-align: center; /* Center header text */
+  }
+
+  .progress-content {
+    align-items: center; /* Center content */
+  }
+}
+
 .progress-header {
   margin-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
