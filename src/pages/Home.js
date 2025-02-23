@@ -6,7 +6,6 @@ import TaskList from '../components/TaskList';
 import Deadline from '../components/Deadline';
 import SearchBar from '../components/SearchBar';
 import './Home.css';
-import TaskProgress from '../components/TaskProgress';
 
 const Home = () => {
   const [tasks, setTasks] = useState([]);
@@ -110,45 +109,42 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <div className="home-content">
-        <div className="home-sidebar">
-          <Deadline tasks={tasks} />
-          <TaskProgress tasks={tasks} />
-        </div>
-        
-        <div className="home-main">
-          {isLoading ? (
-            <div className="loading">Loading tasks...</div>
-          ) : tasks.length === 0 ? (
-            <div className="empty-state">
-              <div className="empty-state-message">
-                <span>👋 Welcome!</span>
-                <span>Start by adding your first task</span>
-                <button 
-                  className="add-task-button"
-                  onClick={() => navigate('/add-task')}
-                >
-                  <ion-icon name="add-outline"></ion-icon>
-                  Add Task
-                </button>
-              </div>
+      <div className="home-sidebar">
+        <Deadline tasks={tasks} />
+      </div>
+      
+      <div className="home-main">
+        {isLoading ? (
+          <div className="loading">Loading tasks...</div>
+        ) : tasks.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-state-message">
+              <span>👋 Welcome!</span>
+              <span>Start by adding your first task</span>
+              <button 
+                className="add-task-button"
+                onClick={() => navigate('/add-task')}
+              >
+                <ion-icon name="add-outline"></ion-icon>
+                Add Task
+              </button>
             </div>
-          ) : (
-            <>
-              <SearchBar 
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-              />
-              <TaskList 
-                tasks={filteredTasks} 
-                onEditTask={handleEditTask} 
-                onDeleteTask={handleDeleteTask} 
-                onCompleteTask={handleCompleteTask}
-                onClearAllTasks={handleClearAllTasks}
-              />
-            </>
-          )}
-        </div>
+          </div>
+        ) : (
+          <>
+            <SearchBar 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
+            <TaskList 
+              tasks={filteredTasks}
+              onEditTask={handleEditTask}
+              onDeleteTask={handleDeleteTask}
+              onCompleteTask={handleCompleteTask}
+              onClearAllTasks={handleClearAllTasks}
+            />
+          </>
+        )}
       </div>
     </div>
   );

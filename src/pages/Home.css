@@ -3,6 +3,7 @@
     margin: 0 auto;
     padding: 20px;
     width: 100%;
+    position: relative;
   }
   
   .home-content {
@@ -14,15 +15,11 @@
   }
   
   .home-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    position: absolute;
+    left: 20px;
+    top: 100px;
     width: 300px;
-    flex-shrink: 0;
-    height: fit-content;
-    position: sticky;
-    top: 350px;
-    margin-left: -100px;
+    z-index: 1;
   }
   
   .home-container header {
@@ -131,12 +128,11 @@
   }
   
   .home-main {
-    flex: 1;
-    min-width: 0;
+    margin-left: 340px;
+    padding: 20px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 12px;
-    padding: 20px;
     min-height: calc(100vh - 140px);
     overflow-x: auto;
   }
